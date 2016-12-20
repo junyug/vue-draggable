@@ -1,20 +1,18 @@
 'use strict';
 exports.install = function(Vue, options) {
   var dropTo = '';
-  var data = {};
   Vue.directive('draggable', {
     bind: function(el, binding) {
-      data = binding.value;
       const dragstart = function(event) {
         dropTo = binding.arg;
         el.classList.add(binding.value.dragged);
         event.dataTransfer.effectAllowed = 'all';
-        event.dataTransfer.setData('data', JSON.stringify(data));
+        event.dataTransfer.setData('data', JSON.stringify(binding.value));
         event.dataTransfer.setData('tag', binding.arg);
         return false;
       };
       const dragend = function(event) {
-        el.classList.remove(data.dragged);
+        el.classList.remove(binding.value.dragged);
         return false;
       };
       el.setAttribute('draggable', true);
@@ -29,7 +27,6 @@ exports.install = function(Vue, options) {
       el.removeEventListener('dragend', dragend);
     },
     update: function(el, binding) {
-      data = binding.value;
     }
   });
   Vue.directive('dropzone', {
