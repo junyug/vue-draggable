@@ -1,9 +1,10 @@
 'use strict';
 exports.install = function(Vue, options) {
   var dropTo = '';
+  var dragstart, dragend, dragenter, dragover, dragleave, drop;
   Vue.directive('draggable', {
     bind: function(el, binding) {
-      const dragstart = function(event) {
+        dragstart = function(event) {
         dropTo = binding.arg;
         el.classList.add(binding.value.dragged);
         event.dataTransfer.effectAllowed = 'all';
@@ -11,7 +12,7 @@ exports.install = function(Vue, options) {
         event.dataTransfer.setData('tag', binding.arg);
         return false;
       };
-      const dragend = function(event) {
+        dragend = function(event) {
         el.classList.remove(binding.value.dragged);
         return false;
       };
@@ -21,24 +22,25 @@ exports.install = function(Vue, options) {
     },
     inserted: function(el, binding) {
     },
-    unbind: function() {
+    unbind: function(el, binding) {
       el.setAttribute('draggable', false);
       el.removeEventListener('dragstart', dragstart);
       el.removeEventListener('dragend', dragend);
     },
     update: function(el, binding) {
+      // data = binding.value;
     }
   });
   Vue.directive('dropzone', {
     acceptStatement: true,
     bind: function(el, binding) {
-      const dragenter = function(event) {
+      dragenter = function(event) {
         if (dropTo == binding.arg) {
           el.classList.add(binding.arg);
         }
         return false;
       };
-      const dragover = function(event) {
+      dragover = function(event) {
         if (event.preventDefault) {
           event.preventDefault();
         }
@@ -48,13 +50,13 @@ exports.install = function(Vue, options) {
         }
         return false;
       };
-      const dragleave = function(event) {
+      dragleave = function(event) {
         if (dropTo == binding.arg) {
           el.classList.remove(binding.arg);
         }
         return false;
       };
-      const drop = function(event) {
+      drop = function(event) {
         if (event.preventDefault) {
           event.preventDefault();
         }
@@ -74,7 +76,7 @@ exports.install = function(Vue, options) {
       el.addEventListener('dragover', dragover);
       el.addEventListener('drop', drop);
     },
-    unbind: function() {
+    unbind: function(el, binding) {
       el.removeEventListener('dragenter', dragenter);
       el.removeEventListener('dragleave', dragleave);
       el.removeEventListener('dragover', dragover);
