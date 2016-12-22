@@ -2,7 +2,7 @@
   "name": "vue-dnd",
   "description": "DnD (drag and drop) plugin for Vue.js, support vue2.x.x",
   "main": "index.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/junyug/vue-draggable.git"
